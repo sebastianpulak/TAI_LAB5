@@ -9,14 +9,11 @@ import config from './config';
 import routes from './REST/routes';
 
 const app = express();
-app.use(express.static(__dirname + '/'));
+app.use(express.static('public'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json({limit: '2048kb'}));
-
+app.use(bodyParser.json());
 app.use(cors());
-
-app.use(express.static('frontend/app'));
 
 mongoose.connect(config.databaseUrl, {useNewUrlParser: true, useCreateIndex: true}, (error) => {
     if (error) {
