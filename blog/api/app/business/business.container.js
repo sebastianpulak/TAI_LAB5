@@ -1,7 +1,7 @@
 'use strict';
 
 import postManager from './post.manager';
-//import productManager from './product.manager';
+import productManager from './product.manager';
 
 function getContext(request) {
   return { user: request && request.user };
@@ -12,13 +12,13 @@ function getter(manager, request) {
     return manager.create(getContext(request), this);
   };
 }
+
 const createBusinessContainer = (request, config) => {
 
-    return {
-      getCategoryManager: getter(categoryManager, request),
-    //getProductManager: getter(productManager, request),
-      getPostManager: getter(postManager, request)
-    };
+  return {
+    getPostManager: getter(postManager, request),
+    getProductManager: getter(productManager, request)
   };
-  
-  export default createBusinessContainer;
+};
+
+export default createBusinessContainer;

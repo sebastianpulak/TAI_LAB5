@@ -15,7 +15,7 @@ import {DataService} from 'src/app/services/data.service';
 })
 export class SelectizeComponent implements AfterViewInit {
 
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', {static: false}) input: ElementRef;
   public posts$;
 
   constructor(private dataService: DataService) {
