@@ -3,12 +3,12 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
 import mongoConverter from '../service/mongoConverter';
+import * as _ from "lodash";
 
 const postSchema = new mongoose.Schema({
-    name: {type: String},
-    url: {type: String},
     title: {type: String},
-    text: {type: String}
+    url: {type: String},
+    content: {type: String}
 },
 {
     collection: 'sp-post'

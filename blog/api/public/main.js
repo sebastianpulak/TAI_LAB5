@@ -18,7 +18,7 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-lg-9 col-md-9 col-sm-9\">\n\t<h4>Dodaj post:</h4>\n\t<form (ngSubmit)=\"submit()\">\n    \t<div class=\"form-group\">\n        \t<label class=\"col-form-label\">Tytuł:</label>\n        \t<input name=\"title\" type=\"text\" class=\"form-control\" placeholder=\"Wprowadź tytuł\" [(ngModel)]=\"post.title\">\n    \t</div>\n\n    \t<div class=\"form-group\">\n        \t<label class=\"col-form-label\">Adres obrazu:</label>\n        \t<input name=\"url\" type=\"text\" class=\"form-control\" placeholder=\"URL\" [(ngModel)]=\"post.url\">\n    \t</div>\n\n    \t<div class=\"form-group\">\n        \t<label class=\"col-form-label\">Treść:</label>\n        \t<textarea name=\"content\" type=\"text\" class=\"form-control\" placeholder=\"Treść\" [(ngModel)]=\"post.content\" rows=\"10\"></textarea>\n    \t</div>\n\n    \t<div class=\"form-group button\">\n        \t<button type=\"submit\" class=\"btn btn-info\">Dodaj</button>\n    \t</div>\n\t</form>\n</div>\n"
+module.exports = "<div class=\"col-lg-9 col-md-9 col-sm-9\">\n\t<h4>Dodaj post:</h4>\n\t<form (ngSubmit)=\"submit()\">\n    \t<div class=\"form-group\">\n        \t<label class=\"col-form-label\">Tytuł:</label>\n        \t<input name=\"title\" type=\"text\" class=\"form-control\" placeholder=\"Wprowadź tytuł\" [(ngModel)]=\"post.title\">\n    \t</div>\n\n    \t<div class=\"form-group\">\n        \t<label class=\"col-form-label\">Adres obrazu:</label>\n        \t<input name=\"url\" type=\"text\" class=\"form-control\" placeholder=\"URL\" [(ngModel)]=\"post.url\">\n    \t</div>\n\n    \t<div class=\"form-group\">\n        \t<label class=\"col-form-label\">Treść:</label>\n        \t<textarea name=\"content\" type=\"text\" class=\"form-control\" placeholder=\"Treść\" [(ngModel)]=\"post.content\" rows=\"10\"></textarea>\n\t\t</div>\n\n    \t<div class=\"form-group button\">\n        \t<button type=\"submit\" class=\"btn btn-info\">Dodaj</button>\n    \t</div>\n\t</form>\n</div>\n"
 
 /***/ }),
 
@@ -84,7 +84,7 @@ module.exports = "<blog-item-image [image]=\"image\"></blog-item-image>\r\n<blog
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<selectize></selectize>\r\n<div *ngFor=\"let item of items$ | filter: filterText\" class=\"card-deck\">\r\n  <blog-item [id]=\"item.id\" [image]=\"item.image\" [text]=\"item.title\">\r\n    \r\n  </blog-item>\r\n</div>"
+module.exports = "<selectize></selectize>\r\n<div *ngFor=\"let item of items$ | filter: filterText\" class=\"card-deck\">\r\n  <blog-item [id]=\"item.id\" [image]=\"item.url\" [text]=\"item.title\">\r\n    \r\n  </blog-item>\r\n</div>"
 
 /***/ }),
 
@@ -323,6 +323,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_filter_pipe__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./pipes/filter.pipe */ "./src/app/pipes/filter.pipe.ts");
 /* harmony import */ var _components_selectize_selectize_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/selectize/selectize.component */ "./src/app/components/selectize/selectize.component.ts");
 /* harmony import */ var _components_add_post_add_post_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/add-post/add-post.component */ "./src/app/components/add-post/add-post.component.ts");
+/* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./services/authentication.service */ "./src/app/services/authentication.service.ts");
+/* harmony import */ var _services_interceptor_auth_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./services/interceptor-auth.service */ "./src/app/services/interceptor-auth.service.ts");
+
+
 
 
 
@@ -376,7 +380,13 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_18__["FormsModule"]
             ],
             providers: [
-                _services_data_service__WEBPACK_IMPORTED_MODULE_15__["DataService"]
+                _services_data_service__WEBPACK_IMPORTED_MODULE_15__["DataService"],
+                _services_authentication_service__WEBPACK_IMPORTED_MODULE_23__["AuthenticationService"],
+                {
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_14__["HTTP_INTERCEPTORS"],
+                    useClass: _services_interceptor_auth_service__WEBPACK_IMPORTED_MODULE_24__["InterceptorAuthService"],
+                    multi: true
+                },
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
@@ -424,7 +434,7 @@ var AddPostComponent = /** @class */ (function () {
         this.post = {
             title: '',
             url: '',
-            content: '',
+            content: ''
         };
     }
     AddPostComponent.prototype.ngOnInit = function () {
@@ -521,8 +531,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BlogItemDetailsComponent", function() { return BlogItemDetailsComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_services_data_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/data.service */ "./src/app/services/data.service.ts");
+/* harmony import */ var src_app_services_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/data.service */ "./src/app/services/data.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 
 
 
@@ -542,8 +552,8 @@ var BlogItemDetailsComponent = /** @class */ (function () {
         });
         if (id) {
             this.dataService.getById(id).subscribe(function (res) {
-                _this.image = res['image'];
-                _this.text = res['text'];
+                _this.image = res['url'];
+                _this.text = res['content'];
             });
         }
         else {
@@ -556,7 +566,7 @@ var BlogItemDetailsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! raw-loader!./blog-item-details.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/blog-item-details/blog-item-details.component.html"),
             styles: [__webpack_require__(/*! ./blog-item-details.component.css */ "./src/app/components/blog-item-details/blog-item-details.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_data_service__WEBPACK_IMPORTED_MODULE_3__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_services_data_service__WEBPACK_IMPORTED_MODULE_2__["DataService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], BlogItemDetailsComponent);
     return BlogItemDetailsComponent;
 }());
@@ -1108,6 +1118,69 @@ var SummaryPipe = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/authentication.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/services/authentication.service.ts ***!
+  \****************************************************/
+/*! exports provided: TOKEN, AUTHENTICATED_USER, AuthenticationService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOKEN", function() { return TOKEN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AUTHENTICATED_USER", function() { return AUTHENTICATED_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthenticationService", function() { return AuthenticationService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+var TOKEN = 'token';
+var AUTHENTICATED_USER = 'authenticaterUser';
+var AuthenticationService = /** @class */ (function () {
+    function AuthenticationService(http) {
+        this.http = http;
+    }
+    AuthenticationService.prototype.executeAuthenticationService = function (username, password) {
+        var basicAuthHeaderString = 'Basic ' + window.btoa(username + ':' + password);
+        return this.http.get("http://localhost:8080/basicauth", { headers: {
+                "Authorization": basicAuthHeaderString
+            } }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (data) {
+            localStorage.setItem(AUTHENTICATED_USER, username);
+            localStorage.setItem(TOKEN, basicAuthHeaderString);
+            return data;
+        }));
+    };
+    AuthenticationService.prototype.getAuthenticatedUser = function () {
+        return localStorage.getItem(AUTHENTICATED_USER);
+    };
+    AuthenticationService.prototype.getAuthenticatedToken = function () {
+        if (this.getAuthenticatedUser()) {
+            return localStorage.getItem(TOKEN);
+        }
+    };
+    AuthenticationService.prototype.isUserLoggedIn = function () {
+        var user = localStorage.getItem(AUTHENTICATED_USER);
+        return !(user === null);
+    };
+    AuthenticationService.prototype.logout = function () {
+        localStorage.removeItem(AUTHENTICATED_USER);
+        localStorage.removeItem(TOKEN);
+    };
+    AuthenticationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], AuthenticationService);
+    return AuthenticationService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/data.service.ts":
 /*!******************************************!*\
   !*** ./src/app/services/data.service.ts ***!
@@ -1127,25 +1200,68 @@ __webpack_require__.r(__webpack_exports__);
 var DataService = /** @class */ (function () {
     function DataService(http) {
         this.http = http;
-        this.url = 'https://blogtai.herokuapp.com';
+        this.url = 'http://localhost:3000';
     }
     DataService.prototype.getAll = function () {
-        return this.http.get(this.url + '/api/posts/');
+        return this.http.get(this.url + '/api/posts');
     };
     DataService.prototype.getById = function (id) {
         return this.http.get(this.url + '/api/posts/' + id);
     };
     DataService.prototype.getByText = function (data) {
-        return this.http.get(this.url + '/api/posts/', data);
+        return this.http.get(this.url + '/api/posts', data);
     };
-    DataService.prototype.createOrUpdate = function (post) {
-        return this.http.post(this.url + "/api/posts", post);
+    DataService.prototype.createOrUpdate = function (data) {
+        return this.http.post(this.url + "/api/posts", data);
     };
     DataService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], DataService);
     return DataService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/interceptor-auth.service.ts":
+/*!******************************************************!*\
+  !*** ./src/app/services/interceptor-auth.service.ts ***!
+  \******************************************************/
+/*! exports provided: InterceptorAuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InterceptorAuthService", function() { return InterceptorAuthService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./authentication.service */ "./src/app/services/authentication.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+var InterceptorAuthService = /** @class */ (function () {
+    function InterceptorAuthService(authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+    InterceptorAuthService.prototype.intercept = function (request, next) {
+        var basicAuthHeaderString = this.authenticationService.getAuthenticatedToken();
+        var username = this.authenticationService.getAuthenticatedUser();
+        if (basicAuthHeaderString && username) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: basicAuthHeaderString
+                }
+            });
+        }
+        return next.handle(request);
+    };
+    InterceptorAuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"]])
+    ], InterceptorAuthService);
+    return InterceptorAuthService;
 }());
 
 

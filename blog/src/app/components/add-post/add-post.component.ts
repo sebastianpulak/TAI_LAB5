@@ -12,7 +12,7 @@ export class AddPostComponent implements OnInit {
   public post = {
     title: '',
     url: '',
-    content: '',
+    content: ''
     }
   
     constructor(private dataService: DataService, private router: Router) { }
